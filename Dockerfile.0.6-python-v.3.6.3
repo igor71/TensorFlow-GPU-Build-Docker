@@ -95,7 +95,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 
 #################################
-# Set user jenkins to the image #
+# Set User Jenkins To The image #
 #################################
 
 RUN useradd -m -d /home/jenkins -s /bin/bash jenkins &&\
@@ -151,15 +151,15 @@ COPY lib/. /usr/local/lib
 ####################################################
 
 
-#################################
-# Check Tensorflow Installation #
-#################################
+#######################################
+# Copy Installation & Unitest Scripts #
+#######################################
  
 COPY cpu_tf_check.py unitest.py build_tf_package.sh /
       
     
 #########################################
-# Add welcome message with instructions #
+# Add Welcome Message With Instructions #
 #########################################
 
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
