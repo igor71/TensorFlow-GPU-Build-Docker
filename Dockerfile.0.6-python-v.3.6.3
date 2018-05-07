@@ -170,7 +170,7 @@ RUN mkdir /bazel && \
 ######################################################
 
 ENV CI_BUILD_PYTHON=python
-ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 ENV TF_NEED_CUDA=1
 ENV TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
 
