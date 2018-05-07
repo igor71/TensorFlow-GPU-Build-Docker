@@ -1,5 +1,5 @@
 pipeline {
-  agent {label 'yi-tensorflow'}
+  agent {label 'tflow-gpu-3.6'}
     stages {
         stage('Create Docker-Build Image For Tensorflow-GPU-MKL') {
             steps {
