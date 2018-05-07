@@ -165,7 +165,7 @@ COPY cpu_tf_check.py unitest.py build_tf_package.sh /
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 	>> /etc/bash.bashrc \
 	; echo "\
-||||||||||||||||||||||||||||||||||||||||||||||||||\n
+||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 |                                                |\n\
 | Docker container running Ubuntu                |\n\
 | with TensorFlow ${TF_BRANCH} optimized for GPU |\n\
