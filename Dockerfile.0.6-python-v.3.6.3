@@ -29,6 +29,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends \
+    software-properties-common \
     python-software-properties \
     python-dev \
     build-essential \
@@ -103,10 +104,8 @@ RUN python3.6 -m pip --no-cache-dir install \
 # Install JRE 8 (latest edition) #
 ##################################
 
-RUN apt-get -q update &&\
-    DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends software-properties-common &&\
-    add-apt-repository -y ppa:openjdk-r/ppa &&\
-    apt-get -q update &&\
+RUN apt-get -q update && \
+    add-apt-repository -y ppa:openjdk-r/ppa && \
     DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends openjdk-8-jre-headless &&\
     apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
 	
