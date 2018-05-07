@@ -15,6 +15,12 @@ export TF_CUDNN_VERSION=7.0 CUDNN_INSTALL_PATH=/usr/local/cud TF_NEED_TENSORRT=0
 
 export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native' TF_SET_ANDROID_WORKSPACE=0
 
+export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
+
+export LIBRARY_PATH=/usr/local/lib
+
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64
+
 ./configure
 
 ##################################################################################################
