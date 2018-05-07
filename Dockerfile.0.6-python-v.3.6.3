@@ -82,7 +82,7 @@ RUN apt-get -q update &&\
 ##############################################################
 
 RUN apt-get -q update &&\
-    DEBIAN_FRONTEND="noninteractive" apt-get -q upgrade -y -o Dpkg::Options::="--force-confnew" --no-install-recommends &&\
+    DEBIAN_FRONTEND="noninteractive" apt-get -q update -y -o Dpkg::Options::="--force-confnew" --no-install-recommends &&\
     DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends openssh-server &&\
     rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin 
 	
@@ -155,7 +155,7 @@ COPY lib/. /usr/local/lib
 # Copy Installation & Unitest Scripts #
 #######################################
  
-COPY cpu_tf_check.py unitest.py build_tf_package.sh /
+COPY gpu_tf_check.py unitest.py build_tf_package.sh /
       
     
 #########################################
