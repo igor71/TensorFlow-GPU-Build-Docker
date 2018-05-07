@@ -55,16 +55,50 @@ RUN apt-get update && \
     dpkg-reconfigure -f noninteractive tzdata && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-	
-########################################
-#    Install Python pip & dependences  #
-########################################
-
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-    rm get-pip.py 
     
-RUN pip --no-cache-dir install numpy
+	
+#################################################
+#     Python 3.6 installations for dev          #
+#################################################
+
+RUN add-apt-repository ppa:jonathonf/python-3.6 && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    python3.6 \
+	python3.6-dev \
+	python3.6-venv \
+	&& \ 
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+	
+RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
+    ln -s /usr/local/bin/pip /usr/local/bin/pip3 && \
+    ln -s /usr/bin/python3.6 /usr/local/bin/python	
+   
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+    python3.6 get-pip.py && \
+    rm get-pip.py 
+
+		
+#################################################
+#     Python Installations                      #
+#################################################
+
+RUN python3.6 -m pip --no-cache-dir install \
+        ipykernel \
+        jupyter \
+        matplotlib \ 
+        numpy \
+	h5py \
+        scipy \
+        sklearn \
+        pandas \
+        && \
+    python3.6 -m ipykernel.kernelspec \
+	    && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
+    
 ##################################
 # Install JRE 8 (latest edition) #
 ##################################
@@ -143,11 +177,9 @@ ENV CI_BUILD_PYTHON python \
     TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
 
 ################ INTEL MKL SUPPORT #################
-
 ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 COPY lib/. /usr/local/lib
-
 ####################################################
 
 
@@ -168,7 +200,7 @@ RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 |                                                |\n\
 | Docker container running Ubuntu                |\n\
-| with TensorFlow ${TF_BRANCH} optimized for GPU |\n\
+| with TensorFlow ${TF_BRANCH} optimized for GPU         |\n\
 | with Intel(R) MKL Support                      |\n\
 |                                                |\n\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
