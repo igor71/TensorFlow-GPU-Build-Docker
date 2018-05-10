@@ -19,13 +19,15 @@ export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
 
 export LIBRARY_PATH=/usr/local/lib
 
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
+
+ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
 ./configure
 
 ##################################################################################################
 # Build and Install TensorFlow. The 'mkl' option builds with Intel(R) Math Kernel Library (MKL), #
-# which detects the platform it is currently running on and takes appropriately optimized paths. #                                         #
+# which detects the platform it is currently running on and takes appropriately optimized paths. #
 # The -march=native option is for code that is not in MKL,                                       #
 # and assumes this container will be run on the same architecture on which it is built.          #
 # ################################################################################################
@@ -40,9 +42,10 @@ bazel build --config="opt" \
             --copt="-DEIGEN_USE_VML" \
             --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
+            rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
-
+			
 #######################################################################
 # Copy tensorflow package from build folder to jenkins home directory #
 #######################################################################
