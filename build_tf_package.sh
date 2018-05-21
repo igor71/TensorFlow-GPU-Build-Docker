@@ -32,20 +32,67 @@ ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda
 # and assumes this container will be run on the same architecture on which it is built.          #
 # ################################################################################################
 
-WHL_DIR=/whl
-HOME=/home/jenkins
+SRV=$(hostname)
 
-bazel build --config="opt" \
-            --config=cuda \
-            --config=mkl \
-            --copt=-msse4.1 \
-            --copt="-DEIGEN_USE_VML" \
-            --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
+  case $SRV in
+	server-2|server-3|server-4|server-5|server-8|server-9|server-17|server-18)
+	   echo "Building Tensorflow Package For $SRV"
+	   WHL_DIR=/whl
+           HOME=/home/jenkins
+           bazel build --config="opt" \
+                       --config=cuda \
+                       --config=mkl \
+	               --copt=-mavx \
+	               --copt=-mavx2 \
+	               --copt=-mfma \
+	               --copt=-mfpmath=both \ 
+	               --copt=-msse4.1 \
+                       --copt=-msse4.2 \
+                       --copt="-DEIGEN_USE_VML" \
+                       --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
             rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
-			
+		;;
+		
+	server-19|server-20)
+           echo "Building Tensorflow Package For $SRV"
+	   WHL_DIR=/whl
+           HOME=/home/jenkins
+           bazel build --config="opt" \
+                       --config=cuda \
+                       --config=mkl \ 
+	               --copt=-msse4.1 \
+                       --copt="-DEIGEN_USE_VML" \
+                       --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
+            //tensorflow/tools/pip_package:build_pip_package && \
+            rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+            mkdir ${WHL_DIR} && \
+            bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
+                ;;
+		
+	server-21)
+	   echo "Building Tensorflow Package For $SRV"
+	   WHL_DIR=/whl
+           HOME=/home/jenkins
+           bazel build --config="opt" \
+                       --config=cuda \
+                       --config=mkl \ 
+                       --copt="-DEIGEN_USE_VML" \
+                       --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
+            //tensorflow/tools/pip_package:build_pip_package && \
+            rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+            mkdir ${WHL_DIR} && \
+            bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
+		break
+		;;
+	*)
+		echo "No Configuration File Set For $SRV"
+		;;
+  esac
+
+ 			
 #######################################################################
 # Copy tensorflow package from build folder to jenkins home directory #
 #######################################################################
