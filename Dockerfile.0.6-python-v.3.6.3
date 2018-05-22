@@ -175,11 +175,15 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 ENV TF_NEED_CUDA=1
 ENV TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
 
-################ INTEL MKL SUPPORT #################
+################ INTEL MKL SUPPORT #######################################################
 ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-COPY lib/. /usr/local/lib
-####################################################
+ARG CRED="server:123server123"
+RUN cd /usr/local/lib && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libiomp5.so -o libiomp5.so && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libmklml_gnu.so -o libmklml_gnu.so && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libmklml_intel.so -o libmklml_intel.so
+##########################################################################################
 
 
 #######################################
