@@ -21,8 +21,6 @@ export LIBRARY_PATH=/usr/local/lib
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
 
-ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
-
 ./configure
 
 ##################################################################################################
@@ -56,7 +54,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
@@ -72,7 +69,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
@@ -87,7 +83,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 break
