@@ -34,9 +34,9 @@ ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda
 
 cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
    if [[ $cpu_info == *"E5-2630"* ]]; then
-      cpu=$( echo $cpu_info |cut -d' ' -f7)
+      CPU=$( echo $cpu_info |cut -d' ' -f7)
    else
-      cpu=$( echo $cpu_info |cut -d' ' -f6)
+      CPU=$( echo $cpu_info |cut -d' ' -f6)
    fi
    
    case $CPU in
