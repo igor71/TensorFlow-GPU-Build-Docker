@@ -7,7 +7,7 @@
 
 export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
 
-export TF_NEED_JEMALLOC=1 TF_NEED_GCP=0 TF_NEED_HDFS=0 TF_NEED_S3=0 TF_NEED_KAFKA=0 TF_ENABLE_XLA=1
+export TF_NEED_JEMALLOC=0 TF_NEED_GCP=0 TF_NEED_HDFS=0 TF_NEED_S3=0 TF_NEED_KAFKA=0 TF_ENABLE_XLA=0
 
 export TF_NEED_GDR=0 TF_NEED_VERBS=0 TF_NEED_OPENCL_SYCL=0 TF_NEED_OPENCL=0 TF_CUDA_VERSION=9.0 CUDA_TOOLKIT_PATH=/usr/local/cuda
 
@@ -33,7 +33,7 @@ ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda
 # ################################################################################################
 
 cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
-   if [[ $cpu_info == *"E5-2630"* ]]; then
+   if [[ $cpu_info == *"E5-2650"* ]]; then
       CPU=$( echo $cpu_info |cut -d' ' -f7)
    else
       CPU=$( echo $cpu_info |cut -d' ' -f6)
@@ -77,7 +77,7 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
 
-        E5-2630)
+        E5-2650)
            echo "Building Tensorflow Package For $CPU"
            WHL_DIR=/whl
            HOME=/home/jenkins
