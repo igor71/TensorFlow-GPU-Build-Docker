@@ -1,9 +1,22 @@
 pipeline {
   agent {label 'tflow-gpu-3.6'}
     stages {
+	stage('Import nvidia/cuda Docker Image') {
+            steps {
+                sh '''#!/bin/bash -xe
+                   if test ! -z "$(docker images -q nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04)"; then
+                      echo "Docker Image Already Exist!!!"
+                   else
+                      pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-9.0-cudnn7-devel-ubuntu16.04.tar | docker load
+                      docker tag 6d001d3d0357 nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+                      echo "DONE!!!"
+                   fi
+		   ''' 
+            }
+        }
         stage('Create Docker-Build Image For Tensorflow-GPU-MKL') {
             steps {
-	              sh 'docker build -f Dockerfile.0.6-python-v.3.6.3 -t yi/tflow-build:0.6-python-v.3.6.3 .'  
+	        sh 'docker build -f Dockerfile.0.6-python-v.3.6.3 -t yi/tflow-build:0.6-python-v.3.6.3 .'  
             }
         }
 	stage('Test Docker-Build Image') { 
