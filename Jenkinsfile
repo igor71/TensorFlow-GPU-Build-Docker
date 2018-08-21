@@ -6,7 +6,7 @@ pipeline {
 	              sh 'docker build -f Dockerfile.0.6 -t yi/tflow-build:0.6 .'  
             }
         }
-	      stage('Test Docker-Build Image') { 
+	stage('Test Docker-Build Image') { 
             steps {
                 sh '''#!/bin/bash -xe
 		              echo 'Hello, YI-TFLOW!!'
@@ -20,6 +20,25 @@ pipeline {
                    ''' 
             }
         }
+	stage('Save & Load Docker Image') { 
+            steps {
+                sh '''#!/bin/bash -xe
+		        echo 'Saving Docker image into tar archive'
+                        docker save yi/tflow-build:0.6 | pv -f | cat > $WORKSPACE/yi-tflow-build-0.6.tar
+			
+                        echo 'Remove Original Docker Image' 
+			CURRENT_ID="$(docker images -q yi/tflow-build:0.6)"
+			docker rmi -f $CURRENT_ID
+			
+                        echo 'Loading Docker Image'
+                        pv -f $WORKSPACE/yi-tflow-build-0.6.tar | docker load
+			docker tag $CURRENT_ID yi/tflow-build:0.6
+                        
+                        echo 'Removing Temp Archive.'  
+                        rm $WORKSPACE/yi-tflow-build-0.6.tar
+                   ''' 
+		    }
+		}		
     }
 	post {
             always {
