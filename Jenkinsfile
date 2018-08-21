@@ -6,7 +6,7 @@ pipeline {
 	              sh 'docker build -f Dockerfile.0.6-python-v.3.6.3 -t yi/tflow-build:0.6-python-v.3.6.3 .'  
             }
         }
-	      stage('Test Docker-Build Image') { 
+	stage('Test Docker-Build Image') { 
             steps {
                 sh '''#!/bin/bash -xe
 		              echo 'Hello, YI-TFLOW!!'
@@ -20,6 +20,25 @@ pipeline {
                    ''' 
             }
         }
+	stage('Save & Load Docker Image') { 
+            steps {
+                sh '''#!/bin/bash -xe
+		        echo 'Saving Docker image into tar archive'
+                        docker save yi/tflow-build:0.6-python-v.3.6.3 | pv -f | cat > $WORKSPACE/yi-tflow-build-0.6-python-v.3.6.3.tar
+			
+                        echo 'Remove Original Docker Image' 
+			CURRENT_ID=$(docker images | grep -E '^yi/tflow-build.*0.6-python-v.3.6.3' | awk -e '{print $3}')
+			docker rmi -f $CURRENT_ID
+			
+                        echo 'Loading Docker Image'
+                        pv -f $WORKSPACE/yi-tflow-build-0.6-python-v.3.6.3.tar | docker load
+			docker tag $CURRENT_ID yi/tflow-build:0.6-python-v.3.6.3
+                        
+                        echo 'Removing Temp Archive.'  
+                        rm $WORKSPACE/yi-tflow-build-0.6-python-v.3.6.3.tar
+                   ''' 
+		    }
+		}			  
     }
 	post {
             always {
