@@ -21,4 +21,4 @@ NOTES:
    docker exec -it tflow-build bash
    ```
 
-   Now all build steps can be performed manually under root account (for testing purpouses, for example)
+   Now all build steps can be performed manually under root account
