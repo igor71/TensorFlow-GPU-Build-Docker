@@ -2,9 +2,6 @@ FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
-ARG TF_BRANCH
-ARG BAZEL_VERSION
-
 ################################################
 #     Basic desktop environment                #
 ################################################
