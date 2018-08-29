@@ -22,3 +22,11 @@ NOTES:
    ```
 
    Now all build steps can be performed manually under root account
+   
+   ```
+   cd /
+   
+   Edit tflow-build.sh file for set desire tensorflow release version
+   
+   bash tflow-build.sh
+   ```
