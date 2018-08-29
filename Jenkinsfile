@@ -16,15 +16,15 @@ pipeline {
         }
         stage('Create Docker-Build Image For Tensorflow-GPU-MKL') {
             steps {
-	        sh 'docker build -f Dockerfile.0.6 -t yi/tflow-build:0.6 .'  
+	        sh 'docker build -f Dockerfile.${DOCKER_TAG} -t yi/tflow-build:${DOCKER_TAG} .'  
             }
         }
 	stage('Test Docker-Build Image') { 
             steps {
                 sh '''#!/bin/bash -xe
-		              echo 'Hello, YI-TFLOW!!'
-                    image_id="$(docker images -q yi/tflow-build:0.6)"
-                      if [[ "$(docker images -q yi/tflow-build:0.6 2> /dev/null)" == "$image_id" ]]; then
+		    echo 'Hello, YI-TFLOW!!'
+                    image_id="$(docker images -q yi/tflow-build:${DOCKER_TAG})"
+                      if [[ "$(docker images -q yi/tflow-build:${DOCKER_TAG} 2> /dev/null)" == "$image_id" ]]; then
                           docker inspect --format='{{range $p, $conf := .RootFS.Layers}} {{$p}} {{end}}' $image_id
                       else
                           echo "It appears that current docker image corrapted!!!"
@@ -37,18 +37,18 @@ pipeline {
             steps {
                 sh '''#!/bin/bash -xe
 		        echo 'Saving Docker image into tar archive'
-                        docker save yi/tflow-build:0.6 | pv -f | cat > $WORKSPACE/yi-tflow-build-0.6.tar
+                        docker save yi/tflow-build:${DOCKER_TAG} | pv -f | cat > $WORKSPACE/yi-tflow-build-${DOCKER_TAG}.tar
 			
                         echo 'Remove Original Docker Image' 
-			CURRENT_ID="$(docker images -q yi/tflow-build:0.6)"
+			CURRENT_ID=$(docker images | grep -E '^ yi/tflow-build.*'${DOCKER_TAG}'' | awk -e '{print $3}')
 			docker rmi -f $CURRENT_ID
 			
                         echo 'Loading Docker Image'
-                        pv -f $WORKSPACE/yi-tflow-build-0.6.tar | docker load
-			docker tag $CURRENT_ID yi/tflow-build:0.6
+                        pv -f $WORKSPACE/yi-tflow-build-${DOCKER_TAG}.tar | docker load
+			docker tag $CURRENT_ID yi/tflow-build:${DOCKER_TAG}
                         
                         echo 'Removing Temp Archive.'  
-                        rm $WORKSPACE/yi-tflow-build-0.6.tar
+                        rm $WORKSPACE/yi-tflow-build-${DOCKER_TAG}.tar
                    ''' 
 		    }
 		}		
