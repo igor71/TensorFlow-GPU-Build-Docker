@@ -3,7 +3,7 @@ FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 ARG TF_BRANCH=${TF_BRANCH}
-ENV BAZEL_VERSION=${BAZEL_VERSION}
+ARG BAZEL_VERSION=${BAZEL_VERSION}
 
 ################################################
 #     Basic desktop environment                #
@@ -147,6 +147,7 @@ RUN echo "build --spawn_strategy=standalone --genrule_strategy=standalone" \
     >>/etc/bazel.bazelrc
 # Install the most recent bazel release.
 WORKDIR /
+ENV BAZEL_VERSION=${BAZEL_VERSION}
 RUN mkdir /bazel && \
     cd /bazel && \
     curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
