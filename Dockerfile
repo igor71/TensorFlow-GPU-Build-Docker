@@ -182,6 +182,7 @@ RUN cd /usr/local/lib && \
 #######################################
  
 COPY gpu_tf_check.py unitest.py build_tf_package.sh /
+COPY tflow-build.sh /
       
     
 #########################################
