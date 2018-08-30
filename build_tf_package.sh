@@ -7,21 +7,24 @@
 
 export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/bin/python PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
 
-export TF_NEED_JEMALLOC=1 TF_NEED_GCP=0 TF_NEED_HDFS=0 TF_NEED_S3=0 TF_NEED_KAFKA=0 TF_ENABLE_XLA=1
+export TF_NEED_JEMALLOC=0 TF_NEED_GCP=0 TF_NEED_HDFS=0 TF_NEED_AWS=0 TF_NEED_KAFKA=0 TF_ENABLE_XLA=1
 
 export TF_NEED_GDR=0 TF_NEED_VERBS=0 TF_NEED_OPENCL_SYCL=0 TF_NEED_OPENCL=0 TF_CUDA_VERSION=9.0 CUDA_TOOLKIT_PATH=/usr/local/cuda
 
-export TF_CUDNN_VERSION=7.0 CUDNN_INSTALL_PATH=/usr/local/cuda TF_NEED_TENSORRT=0 TF_NCCL_VERSION=1.3
+export TF_CUDNN_VERSION=7.0 CUDNN_INSTALL_PATH=/usr/local/cuda TF_NEED_TENSORRT=0 TF_NCCL_VERSION=2.2
 
 export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native' TF_SET_ANDROID_WORKSPACE=0
 
-export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1 TF_NCCL_VERSION=2.2 NCCL_INSTALL_PATH=/usr/local/cuda 
+export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1  NCCL_INSTALL_PATH=/usr/local/cuda
 
 export LIBRARY_PATH=/usr/local/lib export ENV TF_NCCL_VERSION=2
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
 
 ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+
+./configure
+
 
 ./configure
 
@@ -40,7 +43,7 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
    fi
    
    case $CPU in
-        i7-5960X|i7-6900K|i7-6950X)
+        i5-6500|i7-5960X|i7-6900K|i7-6950X)
            echo "Building Tensorflow Package For $CPU"
            WHL_DIR=/whl
            HOME=/home/jenkins
