@@ -25,9 +25,6 @@ ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda
 
 ./configure
 
-
-./configure
-
 ##################################################################################################
 # Build and Install TensorFlow. The 'mkl' option builds with Intel(R) Math Kernel Library (MKL), #
 # which detects the platform it is currently running on and takes appropriately optimized paths. #
