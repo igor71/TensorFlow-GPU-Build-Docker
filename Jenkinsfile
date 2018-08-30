@@ -40,7 +40,7 @@ pipeline {
                         docker save yi/tflow-build:${DOCKER_TAG} | pv -f | cat > $WORKSPACE/yi-tflow-build-${DOCKER_TAG}.tar
 			
                         echo 'Remove Original Docker Image' 
-			CURRENT_ID=$(docker images | grep -E '^yi/tflow-build.*'${DOCKER_TAG}'' | awk -e '{print $3}')
+			CURRENT_ID=$(docker images | grep -E '^yi/tflow-build.*'${DOCKER_TAG}'' | awk '{print $3}')
 			docker rmi -f $CURRENT_ID
 			
                         echo 'Loading Docker Image'
