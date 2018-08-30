@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Create Docker-Build Image For Tensorflow-GPU-MKL') {
             steps {
-	        sh 'docker build --build-arg var_name=${TF_BRANCH} -build-arg var_name=${BAZEL_VERSION} -f Dockerfile.2.7 -t yi/tflow-build:${DOCKER_TAG} .'  
+	        sh 'docker build --build-arg var_name=${TF_BRANCH} -build-arg var_name=${BAZEL_VERSION} -f Dockerfile.${PYTHON_VERSION} -t yi/tflow-build:${DOCKER_TAG} .'  
             }
         }
 	stage('Test Docker-Build Image') { 
