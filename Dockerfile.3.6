@@ -105,11 +105,11 @@ RUN python3.6 -m pip --no-cache-dir install \
     ipykernel \
     matplotlib \ 
     numpy==1.14.5 \
-	  h5py \
+    h5py \
     scipy \
     sklearn \
     pandas \
-	  mock && \
+    mock && \
     python3.6 -m ipykernel.kernelspec && \	
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
@@ -207,7 +207,7 @@ RUN cd /usr/local/lib && \
 # Copy Installation & Unitest Scripts #
 #######################################
  
-COPY gpu_tf_check.py unitest.py build_tf_package.sh /
+COPY gpu_tf_check.py unitest.py build_tf_package.sh tflow-build.sh /
       
     
 #########################################
