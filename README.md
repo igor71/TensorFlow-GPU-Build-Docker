@@ -18,7 +18,7 @@ NOTES:
    However, docker-build image setup properly to allow manual tensorflow package build under root account.
    For doing so need to run docker image detached (like in above command) and then, access docker container as following:
    ```
-   docker exec -it tflow-build bash
+   docker exec -it tflow_build bash
    ```
 
    Now all build steps can be performed manually under root account
