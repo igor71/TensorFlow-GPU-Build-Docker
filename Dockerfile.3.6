@@ -1,0 +1,243 @@
+FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+
+MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
+
+ARG TF_BRANCH
+ARG BAZEL_VERSION
+
+################################################
+#     Basic desktop environment                #
+################################################
+
+# Locale, language
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+locale-gen
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+
+
+#################################################
+#          Set Time Zone Asia/Jerusalem         #
+################################################# 
+
+ENV TZ=Asia/Jerusalem
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#################################################
+#     Very basic installations                  #
+#################################################
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends \
+    build-essential \
+    software-properties-common \
+    curl \
+    wget \
+    git \
+    htop \
+    rsync \
+    zip \
+    unzip \
+    nano \
+    tzdata \
+    mlocate \
+    sudo \
+    sshpass \
+    pv \
+    libnccl2=2.2.13-1+cuda9.0 \
+    libnccl-dev=2.2.13-1+cuda9.0 \
+    libhdf5-serial-dev \
+    libcurl3-dev \
+    libfreetype6-dev \
+    libpng12-dev \
+    libzmq3-dev \
+    pkg-config \
+    python-dev \
+    zlib1g-dev && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+    
+
+###################################################################
+# Link NCCL libray and header where the build script expects them #
+###################################################################
+
+RUN mkdir /usr/local/cuda-9.0/lib &&  \
+    ln -s /usr/lib/x86_64-linux-gnu/libnccl.so.2 /usr/local/cuda/lib/libnccl.so.2 && \
+    ln -s /usr/include/nccl.h /usr/local/cuda/include/nccl.h
+    
+# TODO: Remove after license is excluded from BUILD file.
+RUN gunzip /usr/share/doc/libnccl2/NCCL-SLA.txt.gz && \
+    cp /usr/share/doc/libnccl2/NCCL-SLA.txt /usr/local/cuda/
+
+    
+#################################################
+#     Python 3.6 installations for dev          #
+#################################################
+
+RUN add-apt-repository ppa:jonathonf/python-3.6 && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    python3.6 \
+    python3.6-dev \
+	  python3.6-venv && \ 
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    ln -s /usr/local/bin/pip /usr/local/bin/pip3 && \
+    ln -s /usr/bin/python3.6 /usr/local/bin/python	
+ 
+################################	
+# Updating PIP and Dependences #
+################################
+  
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+    python3.6 get-pip.py && \
+    rm get-pip.py 
+
+		
+#################################################
+#     Python Installations                      #
+#################################################
+
+RUN python3.6 -m pip --no-cache-dir install \
+    ipykernel \
+    matplotlib \ 
+    numpy==1.14.5 \
+	  h5py \
+    scipy \
+    sklearn \
+    pandas \
+	  mock && \
+    python3.6 -m ipykernel.kernelspec && \	
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
+    
+##################################
+# Install JRE 8 (latest edition) #
+##################################
+
+RUN apt-get -q update && \
+    add-apt-repository -y ppa:openjdk-r/ppa && \
+    DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends openjdk-8-jre-headless &&\
+    apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
+	
+	
+##############################################################
+#                Installing and Configuring SSH              #
+##############################################################
+
+RUN apt-get -q update &&\
+    DEBIAN_FRONTEND="noninteractive" apt-get -q update -y -o Dpkg::Options::="--force-confnew" --no-install-recommends &&\
+    DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends openssh-server &&\
+    rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin 
+	
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
+    # Preventing double MOTD's mesages shown when login using SSH
+    sed -i "s/UsePAM yes/UsePAM no/" /etc/ssh/sshd_config && \
+    mkdir /var/run/sshd  
+
+
+#################################
+# Set User Jenkins To The image #
+#################################
+
+RUN useradd -m -d /home/jenkins -s /bin/bash jenkins &&\
+    echo "jenkins:jenkins" | chpasswd
+	
+# Add the jenkins user to sudoers
+RUN echo "jenkins  ALL=(ALL)  NOPASSWD: ALL" >> etc/sudoers
+
+# Set full permission for jenkins folder
+RUN chmod -R 777 /home/jenkins
+
+
+#################################################
+#    Install And Update Bazel                   #
+#################################################
+
+# Running bazel inside a `docker build` command causes trouble, cf:
+#   https://github.com/bazelbuild/bazel/issues/134
+# The easiest solution is to set up a bazelrc file forcing --batch.
+RUN echo "startup --batch" >>/etc/bazel.bazelrc
+# Similarly, we need to workaround sandboxing issues:
+#   https://github.com/bazelbuild/bazel/issues/418
+RUN echo "build --spawn_strategy=standalone --genrule_strategy=standalone" \
+    >>/etc/bazel.bazelrc
+# Install the most recent bazel release.
+WORKDIR /
+ENV BAZEL_VERSION=${BAZEL_VERSION}
+RUN mkdir /bazel && \
+    cd /bazel && \
+    curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
+    curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -o /bazel/LICENSE.txt https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE && \
+    chmod +x bazel-*.sh && \
+    ./bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
+    cd / && \
+    rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
+
+	
+######################################################
+#    Configure the build for our CUDA configuration. #
+######################################################
+
+ENV CI_BUILD_PYTHON=python
+ENV LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+ENV TF_NEED_CUDA=1
+ENV TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
+ENV TF_CUDA_VERSION=9.0
+ENV TF_CUDNN_VERSION=7
+ENV TF_NCCL_VERSION=2.2
+
+################ INTEL MKL SUPPORT #################
+
+ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+RUN cd /usr/local/lib && \
+    curl -OSL ftp://jenkins-cloud/pub/LIB/libiomp5.so -o libiomp5.so && \
+    curl -OSL ftp://jenkins-cloud/pub/LIB/libmklml_gnu.so -o libmklml_gnu.so && \
+    curl -OSL ftp://jenkins-cloud/pub/LIB/libmklml_intel.so -o libmklml_intel.so
+####################################################
+
+
+#######################################
+# Copy Installation & Unitest Scripts #
+#######################################
+ 
+COPY gpu_tf_check.py unitest.py build_tf_package.sh /
+      
+    
+#########################################
+# Add Welcome Message With Instructions #
+#########################################
+
+RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
+	>> /etc/bash.bashrc \
+	; echo "\
+||||||||||||||||||||||||||||||||||||||||||||||||||\n\
+|                                                |\n\
+| Docker container running Ubuntu                |\n\
+| with TensorFlow ${TF_BRANCH} optimized for GPU             |\n\
+| with Intel(R) MKL Support                      |\n\
+|                                                |\n\
+||||||||||||||||||||||||||||||||||||||||||||||||||\n\
+\n "\
+	> /etc/motd
+
+
+#####################
+# Standard SSH Port #
+#####################
+
+EXPOSE 22
+
+
+#####################
+# Default command  #
+#####################
+
+CMD ["/usr/sbin/sshd", "-D"]
+RUN ["/bin/bash"]
