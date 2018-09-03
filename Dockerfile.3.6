@@ -226,8 +226,8 @@ RUN cd /usr/local/lib && \
 # Copy Installation & Unitest Scripts #
 #######################################
  
-COPY gpu_tf_check.py unitest.py build_tf_package.3.6.sh /
-COPY tflow-build.sh /
+COPY gpu_tf_check.py unitest.py build_tf_package.3.6.sh tflow-build.sh / &&\
+     mv build_tf_package.3.6.sh build_tf_package.sh
       
     
 #########################################
