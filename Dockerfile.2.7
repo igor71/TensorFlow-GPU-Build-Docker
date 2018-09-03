@@ -29,26 +29,22 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #     Very basic installations                  #
 #################################################
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     software-properties-common \
-    curl \
-    wget \
-    git \
-    htop \
-    rsync \
-    zip \
-    unzip \
-    nano \
-    tzdata \
-    mlocate \
-    sudo \
-    sshpass \
-    pv \
     pkg-config \
     python-dev \
-    zlib1g-dev && \
+    curl \
+    git \
+    pv \
+    nano \
+    mlocate \
+    rsync \
+    sudo \
+    tzdata \
+    zip \
+    zlib1g-dev \
+    unzip && \
     dpkg-reconfigure -f noninteractive tzdata && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
