@@ -5,7 +5,7 @@
 # and setting library locations                                            #
 ############################################################################
 
-export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
+export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
 
 export TF_NEED_JEMALLOC=0 TF_NEED_GCP=0 TF_NEED_HDFS=0 TF_NEED_S3=0 TF_NEED_KAFKA=0 TF_ENABLE_XLA=0
 
