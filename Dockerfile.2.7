@@ -1,4 +1,4 @@
-FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda-9.0-cuddn7:base
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
@@ -46,13 +46,6 @@ RUN apt-get update && \
     sudo \
     sshpass \
     pv \
-    libnccl2=2.2.13-1+cuda9.0 \
-    libnccl-dev=2.2.13-1+cuda9.0 \
-    libhdf5-serial-dev \
-    libcurl3-dev \
-    libfreetype6-dev \
-    libpng12-dev \
-    libzmq3-dev \
     pkg-config \
     python-dev \
     zlib1g-dev && \
@@ -60,20 +53,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
     
-
-###################################################################
-# Link NCCL libray and header where the build script expects them #
-###################################################################
-
-RUN mkdir /usr/local/cuda-9.0/lib &&  \
-    ln -s /usr/lib/x86_64-linux-gnu/libnccl.so.2 /usr/local/cuda/lib/libnccl.so.2 && \
-    ln -s /usr/include/nccl.h /usr/local/cuda/include/nccl.h
     
-# TODO: Remove after license is excluded from BUILD file.
-RUN gunzip /usr/share/doc/libnccl2/NCCL-SLA.txt.gz && \
-    cp /usr/share/doc/libnccl2/NCCL-SLA.txt /usr/local/cuda/
-
-	
 ################################	
 # Updating PIP and Dependences #
 ################################
@@ -193,8 +173,9 @@ RUN cd /usr/local/lib && \
 # Copy Installation & Unitest Scripts #
 #######################################
  
-COPY gpu_tf_check.py unitest.py build_tf_package.sh /
-COPY tflow-build.sh /
+COPY gpu_tf_check.py unitest.py build_tf_package.2.7.sh tflow-build.sh / && \
+     mv build_tf_package.2.7.sh build_tf_package.sh
+
       
     
 #########################################
