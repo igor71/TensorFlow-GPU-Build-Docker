@@ -3,7 +3,7 @@ FROM nvidia/cuda:9.0-base-ubuntu16.04
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 ARG TF_BRANCH=r.1.10
-ENV BAZEL_VERSION=1.15.0
+ARG BAZEL_VERSION=1.15.0
 
 ################################################
 #     Basic desktop environment                #
