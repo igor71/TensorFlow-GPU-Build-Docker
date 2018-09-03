@@ -5,7 +5,7 @@
 # and setting library locations                                            #
 ############################################################################
 
-export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
+export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
 
 export TF_NEED_JEMALLOC=0 TF_NEED_GCP=0 TF_NEED_HDFS=0 TF_NEED_AWS=0 TF_NEED_KAFKA=0 TF_ENABLE_XLA=1
 
@@ -17,7 +17,7 @@ export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_
 
 export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1  NCCL_INSTALL_PATH=/usr/local/cuda
 
-export LIBRARY_PATH=/usr/local/lib export ENV TF_NCCL_VERSION=2
+export LIBRARY_PATH=/usr/local/lib
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
 
