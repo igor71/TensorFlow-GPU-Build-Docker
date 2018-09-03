@@ -82,7 +82,7 @@ RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
 # Updating PIP and Dependences #
 ################################	
    
-RUN curl --fSsL -O https://bootstrap.pypa.io/get-pip.py && \
+RUN curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && \
     python3.6 get-pip.py && \
     rm get-pip.py 
 
@@ -92,17 +92,15 @@ RUN curl --fSsL -O https://bootstrap.pypa.io/get-pip.py && \
 #################################################
 
 RUN python3.6 -m pip --no-cache-dir install \
-        ipykernel \
-        matplotlib \ 
-        numpy==1.14.5 \
-	h5py \
-        scipy \
-        sklearn \
-	nose \
-        pandas \
-        && \
+    ipykernel \
+    matplotlib \ 
+    numpy==1.14.5 \
+    h5py \
+    scipy \
+    sklearn \
+    nose \
+    pandas && \
     python3.6 -m ipykernel.kernelspec && \
-	
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
