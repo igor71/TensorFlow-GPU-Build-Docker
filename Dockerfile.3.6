@@ -3,7 +3,7 @@ FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 ARG TF_BRANCH=r.1.10
-ARG BAZEL_VERSION=0.15.0
+ENV BAZEL_VERSION=1.15.2
 
 ################################################
 #     Basic desktop environment                #
@@ -60,20 +60,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
     
-
-###################################################################
-# Link NCCL libray and header where the build script expects them #
-###################################################################
-
-RUN mkdir /usr/local/cuda-9.0/lib &&  \
-    ln -s /usr/lib/x86_64-linux-gnu/libnccl.so.2 /usr/local/cuda/lib/libnccl.so.2 && \
-    ln -s /usr/include/nccl.h /usr/local/cuda/include/nccl.h
-    
-# TODO: Remove after license is excluded from BUILD file.
-RUN gunzip /usr/share/doc/libnccl2/NCCL-SLA.txt.gz && \
-    cp /usr/share/doc/libnccl2/NCCL-SLA.txt /usr/local/cuda/
-
-    
+	
 #################################################
 #     Python 3.6 installations for dev          #
 #################################################
@@ -89,13 +76,13 @@ RUN add-apt-repository ppa:jonathonf/python-3.6 && \
 	
 RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
     ln -s /usr/local/bin/pip /usr/local/bin/pip3 && \
-    ln -s /usr/bin/python3.6 /usr/local/bin/python	
- 
+    ln -s /usr/bin/python3.6 /usr/local/bin/python
+    
 ################################	
 # Updating PIP and Dependences #
-################################
-  
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+################################	
+   
+RUN curl --fSsL -O https://bootstrap.pypa.io/get-pip.py && \
     python3.6 get-pip.py && \
     rm get-pip.py 
 
@@ -105,15 +92,17 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 #################################################
 
 RUN python3.6 -m pip --no-cache-dir install \
-    ipykernel \
-    matplotlib \ 
-    numpy==1.14.5 \
-    h5py \
-    scipy \
-    sklearn \
-    pandas \
-    mock && \
-    python3.6 -m ipykernel.kernelspec && \	
+        ipykernel \
+        matplotlib \ 
+        numpy==1.14.5 \
+	h5py \
+        scipy \
+        sklearn \
+	nose \
+        pandas \
+        && \
+    python3.6 -m ipykernel.kernelspec && \
+	
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
@@ -210,7 +199,8 @@ RUN cd /usr/local/lib && \
 # Copy Installation & Unitest Scripts #
 #######################################
  
-COPY gpu_tf_check.py unitest.py build_tf_package.sh tflow-build.sh /
+COPY gpu_tf_check.py unitest.py build_tf_package.sh /
+COPY tflow-build.sh /
       
     
 #########################################
@@ -223,7 +213,7 @@ RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 |                                                |\n\
 | Docker container running Ubuntu                |\n\
-| with TensorFlow ${TF_BRANCH} optimized for GPU             |\n\
+| with TensorFlow ${TF_BRANCH} optimized for GPU        |\n\
 | with Intel(R) MKL Support                      |\n\
 |                                                |\n\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
