@@ -29,45 +29,45 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #     Very basic installations                  #
 #################################################
 
-RUN apt-get update && \
-    apt-get update && apt-get install -y --no-install-recommends \
-        build-essential \
-	software-properties-common \
-	pkg-config \
-        python-dev \
-        curl \
-	git \
-	zip \
-	unzip \
-	nano \
-        tzdata \
-        mlocate \
-        sudo \
-        pv \
-        zlib1g-dev \
-        wget && \
-        dpkg-reconfigure -f noninteractive tzdata \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    software-properties-common \
+    pkg-config \
+    python-dev \
+    curl \
+    git \
+    zip \
+    unzip \
+    nano \
+    tzdata \
+    mlocate \
+    sudo \
+    pv \
+    zlib1g-dev \
+    wget && \
+    dpkg-reconfigure -f noninteractive tzdata 
 	
 ###########################################
 #     CUDA, CUDNN * NCCL Installation     #
 ###########################################
-	
-        cuda-command-line-tools-9-0 \
-        cuda-cublas-dev-9-0 \
-        cuda-cudart-dev-9-0 \
-        cuda-cufft-dev-9-0 \
-        cuda-curand-dev-9-0 \
-        cuda-cusolver-dev-9-0 \
-        cuda-cusparse-dev-9-0 \
-        libcudnn7=7.1.4.18-1+cuda9.0 \
-        libcudnn7-dev=7.1.4.18-1+cuda9.0 \
-        libnccl2=2.2.13-1+cuda9.0 \
-        libnccl-dev=2.2.13-1+cuda9.0 \
-        libcurl3-dev \
-        libfreetype6-dev \
-        libhdf5-serial-dev \
-        libpng12-dev \
-        libzmq3-dev  && \
+
+RUN apt-get install -y --no-install-recommends \
+    cuda-command-line-tools-9-0 \
+    cuda-cublas-dev-9-0 \
+    cuda-cudart-dev-9-0 \
+    cuda-cufft-dev-9-0 \
+    cuda-curand-dev-9-0 \
+    cuda-cusolver-dev-9-0 \
+    cuda-cusparse-dev-9-0 \
+    libcudnn7=7.1.4.18-1+cuda9.0 \
+    libcudnn7-dev=7.1.4.18-1+cuda9.0 \
+    libnccl2=2.2.13-1+cuda9.0 \
+    libnccl-dev=2.2.13-1+cuda9.0 \
+    libcurl3-dev \
+    libfreetype6-dev \
+    libhdf5-serial-dev \
+    libpng12-dev \
+    libzmq3-dev  && \
     rm -rf /var/lib/apt/lists/* && \
     find /usr/local/cuda-9.0/lib64/ -type f -name 'lib*_static.a' -not -name 'libcudart_static.a' -delete && \
     rm /usr/lib/x86_64-linux-gnu/libcudnn_static_v7.a && \
