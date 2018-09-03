@@ -45,7 +45,7 @@ RUN apt-get update && \
         sudo \
         pv \
         zlib1g-dev \
-        wget \
+        wget && \
         dpkg-reconfigure -f noninteractive tzdata \
 	
 ###########################################
