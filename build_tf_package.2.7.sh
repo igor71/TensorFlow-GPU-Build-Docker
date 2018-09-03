@@ -17,7 +17,7 @@ export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_
 
 export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1  NCCL_INSTALL_PATH=/usr/local/cuda
 
-export LIBRARY_PATH=/usr/local/lib export ENV TF_NCCL_VERSION=2
+export LIBRARY_PATH=/usr/local/lib 
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
 
