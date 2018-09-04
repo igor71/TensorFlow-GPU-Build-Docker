@@ -36,16 +36,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-dev \
     curl \
     git \
-    zip \
-    unzip \
-    nano \
-    tzdata \
-    mlocate \
-    sudo \
     pv \
+    nano \
+    mlocate \
+    rsync \
+    sudo \
+    tzdata \
+    zip \
     zlib1g-dev \
-    wget && \
-    dpkg-reconfigure -f noninteractive tzdata 
+    unzip && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* 
 
     	
 #################################################
@@ -79,9 +81,8 @@ RUN curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && \
 #################################################
 
 RUN python3.6 -m pip --no-cache-dir install \
-    Pillow \
-    h5py \
     ipykernel \
+    h5py \
     matplotlib \ 
     mock \
     numpy==1.14.5 \
