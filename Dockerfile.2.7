@@ -73,7 +73,7 @@ RUN python -m pip --no-cache-dir install \
     sklearn \
     nose \
     pandas && \
-    python3.6 -m ipykernel.kernelspec && \
+    python -m ipykernel.kernelspec && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
