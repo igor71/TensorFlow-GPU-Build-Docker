@@ -126,9 +126,6 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
     sed -i "s/UsePAM yes/UsePAM no/" /etc/ssh/sshd_config && \
     mkdir /var/run/sshd  
 
-ENV NOTVISIBLE "in users profile"
-RUN echo "export VISIBLE=now" >> /etc/profile	
-
 
 #################################
 # Set User Jenkins To The image #
@@ -205,7 +202,7 @@ RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 |                                                |\n\
 | Docker container running Ubuntu                |\n\
-| with TensorFlow ${TF_BRANCH} optimized for GPU             |\n\
+| with TensorFlow ${TF_BRANCH} optimized for GPU        |\n\
 | with Intel(R) MKL Support                      |\n\
 |                                                |\n\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
