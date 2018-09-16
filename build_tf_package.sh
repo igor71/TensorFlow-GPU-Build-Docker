@@ -40,7 +40,7 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
    fi
    
    case $CPU in
-        i7-5960X|i7-6900K|i7-6950X)
+        i5-6500|i7-5960X|i7-6900K|i7-6950X)
            echo "Building Tensorflow Package For $CPU"
            WHL_DIR=/whl
            HOME=/home/jenkins
