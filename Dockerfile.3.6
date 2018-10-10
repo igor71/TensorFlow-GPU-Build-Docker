@@ -2,7 +2,7 @@ FROM nvidia/cuda:9.0-cudnn7-base
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
-ARG TF_BRANCH=r1.10
+ARG TF_BRANCH=r1.11
 ARG BAZEL_VERSION=0.15.2
 
 ################################################
@@ -75,7 +75,19 @@ RUN curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && \
     python3.6 get-pip.py && \
     rm get-pip.py 
 
-		
+
+##################################################################
+#                     Possible TensorRT Support                  #
+##################################################################
+
+RUN apt-get update && \
+    apt-get install nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0 && \
+    apt-get update && \
+    apt-get install libnvinfer4=4.1.2-1+cuda9.0 && \
+    apt-get install libnvinfer-dev=4.1.2-1+cuda9.0
+    # ENV TF_NEED_TENSORRT 1
+    
+    
 #################################################
 #     Python Installations                      #
 #################################################
@@ -89,6 +101,8 @@ RUN python3.6 -m pip --no-cache-dir install \
     scipy \
     sklearn \
     nose \
+    keras-applications==1.0.6 \
+    keras-preprocessing==1.0.5 \
     pandas && \
     python3.6 -m ipykernel.kernelspec && \
     apt-get clean && \ 
