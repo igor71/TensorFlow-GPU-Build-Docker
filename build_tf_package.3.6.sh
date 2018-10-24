@@ -77,7 +77,7 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
 
-        E5-2650)
+        E5-2650|E5-2698)
            echo "Building Tensorflow Package For $CPU"
            WHL_DIR=/whl
            HOME=/home/jenkins
