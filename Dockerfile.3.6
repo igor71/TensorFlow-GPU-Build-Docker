@@ -2,8 +2,9 @@ FROM nvidia/cuda:9.0-cudnn7-base
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
-ARG TF_BRANCH=r1.12
-ARG BAZEL_VERSION=0.15.2
+ARG TF_BRANCH=r1.13
+ARG BAZEL_VERSION=0.20.0
+ARG PYTHON_VERSION=3.6.8
 
 ################################################
 #     Basic desktop environment                #
@@ -48,14 +49,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
     	
 #################################################
-#     Python 3.6 installations for dev          #
+#        Python 3.X.X installations for dev     #
 #################################################
 
-RUN add-apt-repository ppa:jonathonf/python-3.6 && \
+RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
+    tar -xvf Python-${PYTHON_VERSION}.tgz && \
+    cd Python-${PYTHON_VERSION} && \
+    ./configure --enable-optimizations && \
+    nc=`nproc` && \
+    make -j$nc && \
+    make install && \
+    cd .. && \
+    rm Python-${PYTHON_VERSION}.tgz && \
+    
     apt-get update && apt-get install -y --no-install-recommends \
-        python3.6 \
         python3.6-dev \
-	python3.6-venv \
 	&& \ 
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
@@ -98,8 +106,8 @@ RUN python3.6 -m pip --no-cache-dir install \
     scipy \
     sklearn \
     nose \
-    keras-applications==1.0.6 \
-    keras-preprocessing==1.0.5 \
+    keras-applications \
+    keras-preprocessing \
     pandas && \
     python3.6 -m ipykernel.kernelspec && \
     apt-get clean && \ 
