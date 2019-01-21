@@ -2,8 +2,8 @@ FROM nvidia/cuda:9.0-cudnn7-base
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
-ARG TF_BRANCH=r1.12
-ARG BAZEL_VERSION=0.15.2
+ARG TF_BRANCH=r1.13
+ARG BAZEL_VERSION=0.20.0
 
 ################################################
 #     Basic desktop environment                #
@@ -81,8 +81,8 @@ RUN python -m pip --no-cache-dir install \
     scipy \
     sklearn \
     nose \
-    keras-applications==1.0.6 \
-    keras-preprocessing==1.0.5 \
+    keras-applications \
+    keras-preprocessing \
     pandas && \
     python -m ipykernel.kernelspec && \
     apt-get clean && \ 
