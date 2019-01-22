@@ -25,6 +25,10 @@ NOTES:
    For doing so need to run docker image detached (like in above command) and then, access docker container as following:
    ```
    docker exec -it tflow_build /bin/bash
+   
+   OR
+   
+   yi-dockeradmin tflow_build
    ```
 
    Now all build steps can be performed manually under root account
