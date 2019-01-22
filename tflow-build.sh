@@ -17,8 +17,8 @@ updatedb
 
 cd /
 
-cp build_tf_package${PYTHON_VERSION}.sh /tensorflow
+cp build_tf_package.${PYTHON_VERSION}.sh /tensorflow
 
 cd tensorflow
 
-/bin/bash build_tf_package${PYTHON_VERSION}.sh
+/bin/bash build_tf_package.${PYTHON_VERSION}.sh
