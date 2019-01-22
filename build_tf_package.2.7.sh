@@ -5,15 +5,15 @@
 # and setting library locations                                            #
 ############################################################################
 
-export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
+export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/site-packages
 
-export TF_NEED_IGNITE=0 TF_ENABLE_XLA=1 TF_NEED_OPENCL_SYCL=0 TF_NEED_ROCM=0  
+export TF_ENABLE_XLA=1 TF_NEED_OPENCL_SYCL=0 TF_NEED_ROCM=0  
 
 export CUDA_TOOLKIT_PATH=/usr/local/cuda CUDNN_INSTALL_PATH=/usr/local/cuda TF_NEED_TENSORRT=0  
 
-export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native' TF_SET_ANDROID_WORKSPACE=0
+export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native -Wno-sign-compare' 
 
-export TF_CUDNN_VERSION=7 TF_CUDA_VERSION=9.0 TF_NCCL_VERSION=2.2  
+export TF_SET_ANDROID_WORKSPACE=0 TF_CUDNN_VERSION=7 TF_CUDA_VERSION=9.0 TF_NCCL_VERSION=2.2  
 
 export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0 NCCL_INSTALL_PATH=/usr/local/cuda
 
@@ -47,6 +47,11 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
                        --config=cuda \
                        --config=mkl \
+		       --config=noaws \
+		       --config=nogcp \
+		       --config=nohdfs \
+		       --config=noignite \
+		       --config=nokafka \
                        --copt=-mavx \
                        --copt=-mavx2 \
                        --copt=-mfma \
@@ -68,6 +73,11 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
                        --config=cuda \
                        --config=mkl \
+		       --config=noaws \
+		       --config=nogcp \
+		       --config=nohdfs \
+		       --config=noignite \
+		       --config=nokafka \
                        --copt=-msse4.1 \
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
@@ -84,6 +94,11 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
                        --config=cuda \
                        --config=mkl \
+		       --config=noaws \
+		       --config=nogcp \
+		       --config=nohdfs \
+		       --config=noignite \
+		       --config=nokafka \
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
