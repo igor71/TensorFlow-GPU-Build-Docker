@@ -3,7 +3,6 @@
 # Building tensorflow package from the sources manually
 
 TF_BRANCH=r1.13
-PYTHON_VERSION=3.6
 
 cd /
 
@@ -17,8 +16,8 @@ updatedb
 
 cd /
 
-cp build_tf_package.${PYTHON_VERSION}.sh /tensorflow
+cp build_tf_package.sh /tensorflow
 
 cd tensorflow
 
-/bin/bash build_tf_package.${PYTHON_VERSION}.sh
+/bin/bash build_tf_package.sh
