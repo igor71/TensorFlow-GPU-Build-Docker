@@ -36,10 +36,9 @@ NOTES:
    ```
    cd /
    
-   Edit tflow-build.sh file setting desired parameters:
+   Edit/Check tflow-build.sh file setting desired parameters:
    
    TF_BRANCH=r1.13
-   PYTHON_VERSION=3.6 (2.7)
    
    bash tflow-build.sh
    ```
