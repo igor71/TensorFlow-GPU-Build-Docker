@@ -1,7 +1,5 @@
 Tensorflow r.2.0::::
 
-
-
 Please specify the location of python. [Default is /usr/local/bin/python]:
 
 
@@ -13,17 +11,15 @@ Do you wish to build TensorFlow with XLA JIT support? [Y/n]:Y
 
 Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]:N
 
-Do you wish to build TensorFlow with ROCm support? [y/N]:N
+Do you wish to build TensorFlow with ROCm Nsupport? [y/N]:N
 
-Please specify the location where CUDA 9.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: -->> Enter
+Please specify the location where CUDA 10.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: -->> Enter
 
 Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: -->> Enter
 
 Do you wish to build TensorFlow with TensorRT support? [y/N]:N
 
-NCCL libraries found in /usr/lib/x86_64-linux-gnu/libnccl.so
-This looks like a system path.
-Assuming NCCL header path is /usr/include
+Please specify the locally installed NCCL version you want to use. [Default is to use https://github.com/nvidia/nccl]: -->> Enter
 
 Do you want to use clang as CUDA compiler? [y/N]:N
 
@@ -53,6 +49,6 @@ Configuration finished
 
 ################################### Running Build Command ######################################################################
 
-bazel build --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=mkl --copt="-DEIGEN_USE_VML" --config=noaws --config=nogcp --config=nohdfs --config=noignite --config=nokafka --config=opt --config=cuda --verbose_failures --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+bazel build --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=mkl --copt="-DEIGEN_USE_VML" --config=noaws --config=nohdfs --config=noignite --config=nokafka --config=opt --config=cuda --verbose_failures --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
  
 
