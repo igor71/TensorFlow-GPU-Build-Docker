@@ -1,13 +1,15 @@
 # TensorFlow-GPU-Build-Docker
 Create Tensorflow GPU Build Docker Image. This build based on nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04 docker image
 ```
+Ubuntu Version  -->> Ubuntu 16.04.6 LTS
+
 docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' f740587223ab
 
-CUDA Version   -->> 10.0.130
+CUDA Version   -->> 10.1.105
 
 docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' f740587223ab
 
-CUDNN Version  -->> 7.5.0.56
+CUDNN Version  -->> 7.4.1.5
 ```
 NOTES:
 
