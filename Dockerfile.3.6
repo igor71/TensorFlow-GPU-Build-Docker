@@ -272,7 +272,7 @@ RUN mv build_tf_package.3.6.sh build_tf_package.sh
 
 RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 	>> /etc/bash.bashrc \
-	; echo "\
+	; printf "\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 |                                                |\n\
 | Docker container running Ubuntu                |\n\
