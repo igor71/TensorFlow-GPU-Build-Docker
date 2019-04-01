@@ -202,7 +202,7 @@ RUN mv build_tf_package.3.6.sh build_tf_package.sh
 # Add Welcome Message With Instructions #
 #########################################
 
-RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
+RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 	>> /etc/bash.bashrc \
 	; echo "\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
