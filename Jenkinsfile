@@ -9,7 +9,7 @@ pipeline {
 		       docker rmi -f nvidia/cuda:10.0-cudnn7-base
                    fi
 		   pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-10.0-cudnn7-base.tar | docker load
-		   docker tag 8a234da7dc88 nvidia/cuda:10.0-cudnn7-base
+		   docker tag 72ae4fdb8787 nvidia/cuda:10.0-cudnn7-base
 		   echo "DONE!!!"
 		   ''' 
             }
