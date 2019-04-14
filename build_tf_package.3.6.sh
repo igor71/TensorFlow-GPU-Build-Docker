@@ -5,7 +5,7 @@
 # and setting library locations                                            #
 ############################################################################
 
-export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3/site-packages
+export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/site-packages
 
 export TF_ENABLE_XLA=1 TF_NEED_OPENCL_SYCL=0 TF_NEED_ROCM=0  
 
