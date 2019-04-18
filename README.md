@@ -34,8 +34,6 @@ NOTES:
    Now all build steps can be performed manually under root account
    
    ```
-   git clone --branch=r2.0 --depth=1 https://github.com/tensorflow/tensorflow.git
-   
    cd /
    
    Edit/Check tflow-build.sh file setting desired parameters:
