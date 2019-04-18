@@ -8,7 +8,7 @@ pipeline {
                       echo "Docker Image Already Exist!!!"
                    else
                       pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-10.0-cudnn7-devel-ubuntu16.04.tar | docker load
-                      docker tag 776e9a3a3370 nvidia/cuda:10.0-cudnn7-base
+                      docker tag 2a9e5a41bb75 nvidia/cuda:10.0-cudnn7-base
                       echo "DONE!!!"
 		   fi
 		   ''' 
