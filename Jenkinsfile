@@ -4,14 +4,14 @@ pipeline {
 	stage('Import nvidia/cuda Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   if test ! -z "$(docker images -q nvidia/cuda:9.0-cudnn7-base)"; then
-                      echo "Docker Image Already Exist -->> Removing!!!"
-		       docker rmi -f nvidia/cuda:9.0-cudnn7-base
-                   fi
-		   pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-9.0-cudnn7-base-1.12.tar | docker load
-		   docker tag f740587223ab nvidia/cuda:9.0-cudnn7-base
-		   echo "DONE!!!"
-		   ''' 
+                   if test ! -z "$(docker images -q nvidia/cuda:10.0-cudnn7-base)"; then
+                      echo "Docker Image Already Exist!!!"
+                   else
+                      pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-10.0-cudnn7-base-ubuntu18.04.tar | docker load
+                      docker tag d420381f30e4 nvidia/cuda:10.0-cudnn7-base
+                      echo "DONE!!!"
+		   fi
+		   '''
             }
         }
         stage('Create Docker-Build Image For Tensorflow-GPU-MKL') {
