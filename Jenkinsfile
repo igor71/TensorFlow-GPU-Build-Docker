@@ -8,8 +8,8 @@ pipeline {
                       echo "Docker Image Already Exist -->> Removing!!!"
 		       docker rmi -f nvidia/cuda:10.0-cudnn7-base
                    fi
-		   pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-9.0-cudnn7-base-1.12.tar | docker load
-		   docker tag f740587223ab nvidia/cuda:10.0-cudnn7-base
+		   pv -f /media/common/DOCKER_IMAGES/Nvidia/BasicImages/nvidia-cuda-10.0-cudnn7-base-ubuntu16.04.tar | docker load
+		   docker tag 2a9e5a41bb75 nvidia/cuda:10.0-cudnn7-base
 		   echo "DONE!!!"
 		   ''' 
             }
