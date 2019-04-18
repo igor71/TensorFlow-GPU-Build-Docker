@@ -4,9 +4,7 @@ MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 ARG TF_BRANCH=r1.13
 ARG BAZEL_VERSION=0.20.0
-ENV PYTHON_VERSION=3.6.8
-# If this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 18.1
+
 
 ################################################
 #     Basic desktop environment                #
@@ -56,8 +54,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
     	
 #################################################
-#        Python 3.X.X installations for dev     #
+#     Python 3.6 installations for dev          #
 #################################################
+
+ENV PYTHON_VERSION=3.6.8
+# If this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
+ENV PYTHON_PIP_VERSION 19.0.3
+# > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK, fixing...
+# http://bugs.python.org/issue19846
+ENV LANG C.UTF-8
 
 # Ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
@@ -70,6 +75,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	openssl \
 	libffi-dev \
 	zlib1g-dev \
+	libsqlite3-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
@@ -112,11 +118,12 @@ RUN set -ex \
 
 # Make some useful symlinks that are expected to exist
 RUN cd /usr/local/bin \
+        && ln -s idle3 idle \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
-	&& ln -s python3-config python-config 
+	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6 \
+	&& ln -s python3-config python-config
 	
-
 ##################################	
 # Installing PIP and Dependences #
 ##################################	
@@ -139,6 +146,7 @@ RUN set -ex; \
 			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' +; \
 	rm -f get-pip.py
+
 
 
 ##################################################################
