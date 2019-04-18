@@ -1,22 +1,18 @@
 # TensorFlow-GPU-Build-Docker
 Create Tensorflow GPU Build Docker Image. This build based on nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04 docker image
 ```
-Ubuntu Version  -->> Ubuntu 18.04.2 LTS
+CUDA Version   -->> 9.0.176
 
-docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' e488e37d832f
-
-CUDA Version   -->> 10.1.130
-
-docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' e488e37d832f
-
-CUDNN Version  -->> 7.5.0.56
+CUDNN Version  -->> 7.0.5.15
 ```
 
 NOTES:
 
 1. It is possible to run the docker manually by executing following command:
    ``` 
-   docker run --runtime=nvidia -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:0.x-python-v.3.6.3
+   nvidia-docker run -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:0.x
+   
+   nvidia-docker run -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:0.x-python-v.3.6.3
    ```
 
 2. Build-Docker prepared to run as jenkins slave for CI/CD proccess, so when jenkins spinup docker container,
@@ -34,20 +30,3 @@ NOTES:
 
    Now all build steps can be performed manually under root account
    
-   ```
-   git clone --branch=r2.0 --depth=1 https://github.com/tensorflow/tensorflow.git
-
-   cd /
-
-   Edit/Check tflow-build.sh file setting desired parameters:
-
-   TF_BRANCH=r1.13
-   
-   bash tflow-build.sh
-   ```
-   
-   Check tensorflow can be installed properly:
-   ```
-   pip --no-cache-dir install --upgrade /whl/tensorflow-2*.whl
-   python -c "import tensorflow as tf; print(tf.__version__)"
-   ```
