@@ -34,7 +34,6 @@ NOTES:
    Now all build steps can be performed manually under root account
    
    ```
-   
    cd /
    
    Edit/Check tflow-build.sh file setting desired parameters:
