@@ -39,7 +39,7 @@ NOTES:
    
    Edit/Check tflow-build.sh file setting desired parameters:
    
-   TF_BRANCH=r1.13
+   TF_BRANCH=r1.14
    
    bash tflow-build.sh
    ```
@@ -47,6 +47,6 @@ NOTES:
    Check tensorflow installed properly:
    
    ```
-   pip --no-cache-dir install --upgrade /whl/tensorflow-1.13.1*.whl
+   pip --no-cache-dir install --upgrade /whl/tensorflow-1.14*.whl
    python -c "import tensorflow as tf; print(tf.__version__)"
    ```
