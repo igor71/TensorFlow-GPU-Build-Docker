@@ -1,4 +1,4 @@
-Tensorflow r.1.13::::
+Tensorflow r.1.14::::
 
 
 
@@ -15,16 +15,20 @@ Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]:N
 
 Do you wish to build TensorFlow with ROCm support? [y/N]:N
 
-Please specify the location where CUDA 9.0 toolkit is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: -->> Enter
-
-Please specify the location where cuDNN 7 library is installed. Refer to README.md for more details. [Default is /usr/local/cuda]: -->> Enter
-
 Do you wish to build TensorFlow with TensorRT support? [y/N]:N
 
-NCCL libraries found in /usr/lib/x86_64-linux-gnu/libnccl.so
-This looks like a system path.
-Assuming NCCL header path is /usr/include
+No TensorRT support will be enabled for TensorFlow.
 
+Found CUDA 10.0 in:
+    /usr/local/cuda/lib64
+    /usr/local/cuda/include
+Found cuDNN 7 in:
+    /usr/lib/x86_64-linux-gnu
+    /usr/include
+Found NCCL 2 in:
+    /usr/local/cuda/lib
+    /usr/local/cuda/include
+    
 Do you want to use clang as CUDA compiler? [y/N]:N
 
 Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: -->> Enter
@@ -41,15 +45,17 @@ Preconfigured Bazel build configs. You can use any of the below by adding "--con
         --config=gdr            # Build with GDR support.
         --config=verbs          # Build with libverbs support.
         --config=ngraph         # Build with Intel nGraph support.
+        --config=numa           # Build with NUMA support.
         --config=dynamic_kernels        # (Experimental) Build kernels into separate shared objects.
 Preconfigured Bazel build configs to DISABLE default on features:
         --config=noaws          # Disable AWS S3 filesystem support.
         --config=nogcp          # Disable GCP support.
         --config=nohdfs         # Disable HDFS support.
-        --config=noignite       # Disable Apacha Ignite support.
+        --config=noignite       # Disable Apache Ignite support.
         --config=nokafka        # Disable Apache Kafka support.
         --config=nonccl         # Disable NVIDIA NCCL support.
 Configuration finished
+
 
 ################################### Running Build Command ######################################################################
 
