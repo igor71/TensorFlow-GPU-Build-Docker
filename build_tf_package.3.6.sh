@@ -13,15 +13,11 @@ export TF_NEED_TENSORRT=0
 
 export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native -Wno-sign-compare' 
 
-export TF_SET_ANDROID_WORKSPACE=0 TF_CUDNN_VERSION=7 TF_CUDA_VERSION=10.0 TF_NCCL_VERSION=2.4  
+export TF_SET_ANDROID_WORKSPACE=0 TF_CUDNN_VERSION=7 TF_CUDA_VERSION=10.0
 
-export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0 NCCL_INSTALL_PATH=/usr/local/cuda
-
-export LIBRARY_PATH=/usr/local/lib
+export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0 
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
-
-ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
 ./configure
 
