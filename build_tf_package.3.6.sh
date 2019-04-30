@@ -56,7 +56,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
@@ -76,7 +75,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
@@ -95,7 +93,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 break
