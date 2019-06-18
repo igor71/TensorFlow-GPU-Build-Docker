@@ -15,9 +15,9 @@ NOTES:
 
 1. It is possible to run the docker manually by executing following command:
    ```
-   nvidia-docker run -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:1.1-python-v.3.6
+   nvidia-docker run -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:1.2-python-v.3.6
    
-   docker run --runtime=nvidia -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:1.1-python-v.3.6
+   docker run --runtime=nvidia -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:1.2-python-v.3.6
    ```
 
 3. Build-Docker prepared to run as jenkins slave for CI/CD proccess, so when jenkins spinup docker container,
