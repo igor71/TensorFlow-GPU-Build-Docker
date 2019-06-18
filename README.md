@@ -15,7 +15,7 @@ NOTES:
 
 1. It is possible to run the docker manually by executing following command:
    ```
-   docker run --runtime=nvidia -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:1.1-python-v.3.6
+   docker run --runtime=nvidia -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:1.3-python-v.3.6
   
    ```
 
