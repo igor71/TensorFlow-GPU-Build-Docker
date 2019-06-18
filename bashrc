@@ -13,8 +13,11 @@ _  /   /  __/  / / /(__  )/ /_/ /  /   _  __/   _  / / /_/ /_ |/ |/ /
 TF
 echo -e "\e[0;33m"
 
+DISTRIB_RELEASE=`cat /etc/lsb-release | grep -i "DISTRIB_RELEASE" | cut -d "=" -f2`
+
 if [[ $EUID -eq 0 ]]; then
   cat <<WARN
+This Docker Container Based On Ubuntu ${DISTRIB_RELEASE}
 WARNING: You are running this container as root, which can cause new files in
 mounted volumes to be created as the root user on your host machine.
 To avoid this, run the container by specifying your user's userid:
