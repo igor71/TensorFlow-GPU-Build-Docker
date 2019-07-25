@@ -29,10 +29,10 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
            --config=cuda \
            --config=mkl \
-		       --config=noaws \
-		       --config=nohdfs \
-		       --config=noignite \
-		       --config=nokafka \
+	   --config=noaws \
+	   --config=nohdfs \
+	   --config=noignite \
+	   --config=nokafka \
            --copt=-mavx \
            --copt=-mavx2 \
            --copt=-mfma \
@@ -41,10 +41,10 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            --copt=-msse4.2 \
            --copt="-DEIGEN_USE_VML" \
            --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
-            //tensorflow/tools/pip_package:build_pip_package && \
-	          rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
-            mkdir ${WHL_DIR} && \
-            bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
+           //tensorflow/tools/pip_package:build_pip_package && \
+	   rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+           mkdir ${WHL_DIR} && \
+           bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
 
 	i9-7940X)
@@ -54,17 +54,17 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
            --config=cuda \
            --config=mkl \
-		       --config=noaws \
-		       --config=nohdfs \
-		       --config=noignite \
-		       --config=nokafka \
+	   --config=noaws \
+	   --config=nohdfs \
+	   --config=noignite \
+	   --config=nokafka \
            --copt=-msse4.1 \
            --copt="-DEIGEN_USE_VML" \
            --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
-            //tensorflow/tools/pip_package:build_pip_package && \
-	          rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
-            mkdir ${WHL_DIR} && \
-            bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
+           //tensorflow/tools/pip_package:build_pip_package && \
+	   rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+           mkdir ${WHL_DIR} && \
+           bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
 
         E5-2650|E5-2698)
@@ -74,16 +74,16 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
            --config=cuda \
            --config=mkl \
-		       --config=noaws \
-		       --config=nohdfs \
-		       --config=noignite \
-		       --config=nokafka \
+	   --config=noaws \
+	   --config=nohdfs \
+	   --config=noignite \
+	   --config=nokafka \
            --copt="-DEIGEN_USE_VML" \
            --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
-            //tensorflow/tools/pip_package:build_pip_package && \
-	          rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
-            mkdir ${WHL_DIR} && \
-            bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
+           //tensorflow/tools/pip_package:build_pip_package && \
+	   rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+           mkdir ${WHL_DIR} && \
+           bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 break
                 ;;	
 		*)
