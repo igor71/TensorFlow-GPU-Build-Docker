@@ -1,8 +1,7 @@
 #! /bin/bash
 
 ############################################################################
-# Configure the build for CPU with MKL by accepting default build options  #
-# and setting library locations                                            #
+#          Setting up symbolic link needed during build process            #
 ############################################################################
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
