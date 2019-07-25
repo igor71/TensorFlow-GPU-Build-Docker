@@ -232,7 +232,7 @@ ENV TF_CUDNN_VERSION=7
 # Copy Installation & Unitest Scripts #
 #######################################
  
-COPY gpu_tf_check.py unitest.py build_tf_package.3.6.sh tflow-build.sh / 
+COPY gpu_tf_check.py unitest.py build_tf_package.3.6.sh tflow-build.sh .tf_configure.bazelrc auto_build.sh / 
 RUN mv build_tf_package.3.6.sh build_tf_package.sh
       
     
