@@ -4,7 +4,7 @@
 #          Setting up symbolic link needed during build process            #
 ############################################################################
 
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
+ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
 ##################################################################################################
 # Build and Install TensorFlow. The 'mkl' option builds with Intel(R) Math Kernel Library (MKL), #
