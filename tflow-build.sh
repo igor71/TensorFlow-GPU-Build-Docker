@@ -6,18 +6,20 @@ TF_BRANCH=r1.14
 
 cd /
 
-git clone --branch=${TF_BRANCH} --depth=1 https://github.com/tensorflow/tensorflow.git
+echo 'jenkins' | sudo -S git clone --branch=${TF_BRANCH} --depth=1 https://github.com/tensorflow/tensorflow.git
 
 cd tensorflow
 
-git checkout ${TF_BRANCH}
+echo 'jenkins' |sudo -S git checkout ${TF_BRANCH}
 
-updatedb
+echo 'jenkins' |sudo -S updatedb
 
 cd /
 
-cp build_tf_package.sh .tf_configure.bazelrc /tensorflow
+echo 'jenkins' | sudo -S cp auto_build.sh /tensorflow
+
+echo 'jenkins' | sudo -S cp .tf_configure.bazelrc /tensorflow
 
 cd tensorflow
 
-/bin/bash auto_build.sh
+echo 'jenkins' | sudo -S bash auto_build.sh
