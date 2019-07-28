@@ -41,6 +41,8 @@ NOTES:
    
    TF_BRANCH=r1.13
    
+   su jenkins
+   
    bash tflow-build.sh
    ```
    
