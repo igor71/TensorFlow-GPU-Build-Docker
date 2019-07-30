@@ -270,18 +270,7 @@ RUN mv build_tf_package.3.6.sh build_tf_package.sh
 # Add Welcome Message With Instructions #
 #########################################
 
-RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
-	>> /etc/bash.bashrc \
-	; printf "\
-||||||||||||||||||||||||||||||||||||||||||||||||||\n\
-|                                                |\n\
-| Docker container running Ubuntu                |\n\
-| with TensorFlow ${TF_BRANCH} optimized for GPU        |\n\
-| with Intel(R) MKL Support                      |\n\
-|                                                |\n\
-||||||||||||||||||||||||||||||||||||||||||||||||||\n\
-\n "\
-	> /etc/motd
+COPY bashrc /etc/bash.bashrc
 
 
 #####################
