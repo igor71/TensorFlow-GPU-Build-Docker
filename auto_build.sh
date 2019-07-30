@@ -11,8 +11,6 @@ export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/ex
 
 ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
-./configure
-
 ##################################################################################################
 # Build and Install TensorFlow. The 'mkl' option builds with Intel(R) Math Kernel Library (MKL), #
 # which detects the platform it is currently running on and takes appropriately optimized paths. #
@@ -35,10 +33,10 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
            --config=cuda \
            --config=mkl \
-		       --config=noaws \
-		       --config=nohdfs \
-		       --config=noignite \
-		       --config=nokafka \
+	   --config=noaws \
+	   --config=nohdfs \
+	   --config=noignite \
+	   --config=nokafka \
            --copt=-mavx \
            --copt=-mavx2 \
            --copt=-mfma \
@@ -60,10 +58,10 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
            --config=cuda \
            --config=mkl \
-		       --config=noaws \
-		       --config=nohdfs \
-		       --config=noignite \
-		       --config=nokafka \
+	   --config=noaws \
+	   --config=nohdfs \
+	   --config=noignite \
+	   --config=nokafka \
            --copt=-msse4.1 \
            --copt="-DEIGEN_USE_VML" \
            --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
@@ -80,10 +78,10 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            bazel build --config=opt \
            --config=cuda \
            --config=mkl \
-		       --config=noaws \
-		       --config=nohdfs \
-		       --config=noignite \
-		       --config=nokafka \
+	   --config=noaws \
+	   --config=nohdfs \
+	   --config=noignite \
+	   --config=nokafka \
            --copt="-DEIGEN_USE_VML" \
            --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
