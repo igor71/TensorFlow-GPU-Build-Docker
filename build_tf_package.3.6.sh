@@ -7,21 +7,17 @@
 
 export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_PATH=/usr/local/lib/python3.6/site-packages
 
-export TF_ENABLE_XLA=1 TF_NEED_OPENCL_SYCL=0 TF_NEED_ROCM=0  
+export TF_ENABLE_XLA=1 TF_NEED_OPENCL_SYCL=0 TF_NEED_ROCM=0
 
-export CUDA_TOOLKIT_PATH=/usr/local/cuda CUDNN_INSTALL_PATH=/usr/local/cuda TF_NEED_TENSORRT=0  
+export CUDA_TOOLKIT_PATH=/usr/local/cuda-10.0 TF_NEED_TENSORRT=0
 
 export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native -Wno-sign-compare' 
 
-export TF_SET_ANDROID_WORKSPACE=0 TF_CUDNN_VERSION=7 TF_CUDA_VERSION=10.0 TF_NCCL_VERSION=2.4  
+export TF_SET_ANDROID_WORKSPACE=0 TF_CUDNN_VERSION=7 TF_CUDA_VERSION=10.0
 
-export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0 NCCL_INSTALL_PATH=/usr/local/cuda
+export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0
 
-export LIBRARY_PATH=/usr/local/lib
-
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib64:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64/stubs
-
-ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
 ./configure
 
@@ -60,7 +56,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
@@ -80,7 +75,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 ;;
@@ -99,7 +93,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
                        --copt="-DEIGEN_USE_VML" \
                        --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
             //tensorflow/tools/pip_package:build_pip_package && \
-	    rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
                 break
