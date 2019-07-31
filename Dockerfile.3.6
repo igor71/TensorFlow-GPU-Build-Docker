@@ -234,16 +234,6 @@ ENV TF_CUDNN_VERSION=7
 # CACHE_STOP is used to rerun future commands, otherwise cloning tensorflow will be cached and will not pull the most recent version
 ARG CACHE_STOP=1
 
-################ INTEL MKL SUPPORT #################
-
-ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-RUN cd /usr/local/lib && \
-    curl -OSL ftp://jenkins-cloud/pub/LIB/libiomp5.so -o libiomp5.so && \
-    curl -OSL ftp://jenkins-cloud/pub/LIB/libmklml_gnu.so -o libmklml_gnu.so && \
-    curl -OSL ftp://jenkins-cloud/pub/LIB/libmklml_intel.so -o libmklml_intel.so
-####################################################
-
 
 #######################################
 # Copy Installation & Unitest Scripts #
