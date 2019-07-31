@@ -49,6 +49,9 @@ pipeline {
                         
                         echo 'Removing Temp Archive.'  
                         rm $WORKSPACE/yi-tflow-build-${DOCKER_TAG}.tar
+			
+			echo 'Removing Basic Docker Image'
+			docker rmi -f nvidia/cuda:10.0-cudnn7-base
                    ''' 
 		    }
 		}		
