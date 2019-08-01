@@ -4,6 +4,8 @@ Create Tensorflow GPU Build Docker Image. This build based on nvidia/cuda:9.0-cu
 CUDA Version   -->> 9.0.176
 
 CUDNN Version  -->> 7.0.5.15
+
+Python Version -->> 3.6.x
 ```
 
 NOTES:
