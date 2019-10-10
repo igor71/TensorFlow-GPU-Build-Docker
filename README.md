@@ -50,4 +50,11 @@ NOTES:
    ```
    pip --no-cache-dir install --upgrade /whl/tensorflow-2*.whl
    python -c "import tensorflow as tf; print(tf.__version__)"
+   python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
+   ```
+   
+   TensorFlow ver. 2.x.x:
+   
+   ```
+   python -c "import tensorflow as tf; x = [[2.]]; print('tensorflow version', tf.__version__); print('hello, {}'.format(tf.matmul(x, x)))"
    ```
