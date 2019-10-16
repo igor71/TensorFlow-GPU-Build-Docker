@@ -59,7 +59,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV PYTHON_VERSION=3.6.8
 # If this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 19.2.1
+ENV PYTHON_PIP_VERSION 19.2.3
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK, fixing...
 # http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
