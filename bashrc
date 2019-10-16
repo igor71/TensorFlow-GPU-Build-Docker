@@ -25,9 +25,9 @@ $ docker run -u \$(id -u):\$(id -g) args...
 WARN
 else
   cat <<EXPL
-You are running this container as user with ID $(id -u) and group $(id -g),
-which should map to the ID and group for your user on the Docker host. Great!
-In order to run any command as sudo user, please run su jenkins command.
+You are running this container as user with ID $(id -u) and group ID $(id -g),
+which should map to the ID and group ID for your user on the Docker host. Great!
+In order to run any command as sudo user, please run sudo su command.
 EXPL
 fi
 
