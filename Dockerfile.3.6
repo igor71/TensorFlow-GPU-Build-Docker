@@ -240,10 +240,11 @@ RUN mv build_tf_package.3.6.sh build_tf_package.sh
 # Add Welcome Message With Instructions #
 #########################################
 
-COPY bashrc /etc/bash.bashrc
+COPY bashrc /tmp/bashrc
 RUN echo ' ' >> /etc/bashrc && \
     echo '########## Defaul Login Message ##########' >> /etc/bashrc && \
-    cat bashrc >> /etc/bash.bashrc
+    cat /tmp/bashrc >> /etc/bash.bashrc && \
+    rm -f /tmp/bash.bashrc
 	
 
 #####################
