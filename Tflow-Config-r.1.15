@@ -12,10 +12,6 @@ Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]:N
 
 Do you wish to build TensorFlow with ROCm support? [y/N]:N
 
-Do you wish to build TensorFlow with TensorRT support? [y/N]:N
-
-No TensorRT support will be enabled for TensorFlow.
-
 Found CUDA 10.0 in:
     /usr/local/cuda/lib64
     /usr/local/cuda/include
