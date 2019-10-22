@@ -49,6 +49,6 @@ NOTES:
    Check tensorflow installed properly:
    
    ```
-   pip --no-cache-dir install --upgrade /whl/tensorflow-1.14*.whl
+   pip --no-cache-dir install --upgrade /whl/tensorflow-1.15*.whl
    python -c "import tensorflow as tf; print(tf.__version__)"
    ```
