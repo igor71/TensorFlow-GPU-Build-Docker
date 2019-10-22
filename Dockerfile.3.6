@@ -2,8 +2,8 @@ FROM nvidia/cuda:10.0-cudnn7-base
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
-ARG TF_BRANCH=r1.14
-ARG BAZEL_VERSION=0.24.1
+ARG TF_BRANCH=r1.15
+ARG BAZEL_VERSION=0.26.1
 
 ################################################
 #     Basic desktop environment                #
@@ -28,6 +28,7 @@ ENV LANG C.UTF-8
 
 ENV TZ=Asia/Jerusalem
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 
 #################################################
 #     Very basic installations                  #
@@ -153,11 +154,18 @@ RUN set -ex; \
 
 RUN python -m pip --no-cache-dir install \
     ipykernel \
+    Pillow \
+    h5py \
+    keras_applications \
+    keras_preprocessing \
+    matplotlib \
+    mock \
     numpy \
     scipy \
-    h5py \
-    keras-applications \
-    keras-preprocessing \
+    sklearn \
+    pandas \
+    future \
+    portpicker \
     && \
     python -m ipykernel.kernelspec && \
     apt-get clean && \ 
@@ -226,6 +234,7 @@ ENV TF_NEED_CUDA=1
 ENV TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0
 ENV TF_CUDA_VERSION=10
 ENV TF_CUDNN_VERSION=7
+ENV TF_NEED_TENSORRT=0
 
 
 #######################################
