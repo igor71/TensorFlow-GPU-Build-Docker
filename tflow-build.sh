@@ -20,4 +20,4 @@ cp build_tf_package.sh .tf_configure.bazelrc /tensorflow
 
 cd tensorflow
 
-/bin/bash auto_build.sh
+/bin/bash build_tf_package.sh
