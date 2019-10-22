@@ -9,9 +9,9 @@ export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python PYTHON_LIB_P
 
 export TF_ENABLE_XLA=1 TF_NEED_OPENCL_SYCL=0 TF_NEED_ROCM=0  
 
-export TF_CUDA_CLANG=0
+export TF_CUDA_CLANG=0 GCC_HOST_COMPILER_PATH=/usr/bin/gcc
 
-export GCC_HOST_COMPILER_PATH=/usr/bin/gcc TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native -Wno-sign-compare' 
+export  TF_NEED_MPI=0 CC_OPT_FLAGS='-march=native -Wno-sign-compare' 
 
 export TF_SET_ANDROID_WORKSPACE=0 TF_CUDNN_VERSION=7 TF_CUDA_VERSION=10.0
 
